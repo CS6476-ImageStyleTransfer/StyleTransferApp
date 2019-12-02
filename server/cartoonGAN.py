@@ -6,9 +6,9 @@ from PIL import Image
 import torchvision.transforms as transforms
 from torch.autograd import Variable
 import torchvision.utils as vutils
-from network.Transformer import Transformer
+from networks.Transformer import Transformer
 
-def transfer(input_image, style, load_size=450, model_path='./pretrained_model'):
+def transfer(input_image, style, load_size=450, model_path='./trained_model/CartoonGAN'):
 	model = Transformer()
 	model.load_state_dict(torch.load(os.path.join(model_path, style + '_net_G_float.pth')))
 	model.eval()
