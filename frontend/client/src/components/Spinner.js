@@ -1,10 +1,10 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlingBall } from '@fortawesome/free-solid-svg-icons'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export default () => 
   <div className='rolling'>
     <div className='spinner fadein'>
-      <FontAwesomeIcon icon={faBowlingBall} size='5x' color='#268cf1' />
+      <FontAwesomeIcon icon={faSpinner} size='5x' color='#268cf1' />
     </div>
   </div>

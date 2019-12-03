@@ -3,11 +3,11 @@ import Notifications, { notify } from 'react-notify-toast'
 import Spinner from './components/Spinner'
 import UploadImage from './components/UploadImage'
 import ResultImage from './components/ResultImage'
-import Button from './components/Button'
+import UploadButton from './components/UploadButton'
 import Cover from './components/Cover'
 import WakeUp from './components/WakeUp'
 import Footer from './components/Footer'
-import { API_URL } from './config'
+import { IMAGE_SERVER_URL, TRANSFORM_SERVER_URL } from './config'
 import './App.css'
 
 const toastColor = { 
@@ -20,12 +20,13 @@ export default class App extends Component {
   state = {
     loading: true,
     uploading: false,
+    transforming: false,
     images: [],
-    result: []
+    result: ''
   }
 
   componentDidMount() {
-    fetch(`${API_URL}/wake-up`)
+    fetch(`${IMAGE_SERVER_URL}/wake-up`)
       .then(res => {
         if (res.ok) {
           return this.setState({ loading: false })  
@@ -37,7 +38,7 @@ export default class App extends Component {
 
   toast = notify.createShowQueue()
 
-  onChange = e => {
+  onUploadImage = e => {
     const errs = [] 
     const files = Array.from(e.target.files)
 
@@ -67,7 +68,7 @@ export default class App extends Component {
 
     this.setState({ uploading: true })
 
-    fetch(`${API_URL}/image-upload`, {
+    fetch(`${IMAGE_SERVER_URL}/image-upload`, {
       method: 'POST',
       body: formData
     })
@@ -103,6 +104,40 @@ export default class App extends Component {
     this.toast('Oops, something went wrong', 'custom', 2000, toastColor)
     this.setState({ images: this.filter(id) })
   }
+
+  transformStyle = () => {
+    if (this.state.images.length === 0) {
+      const msg = 'Please upload an image first!' 
+      this.toast(msg, 'custom', 2000, toastColor)
+    } else {
+      const url = this.state.images[0].secure_url
+      fetch(`${TRANSFORM_SERVER_URL}/tf`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'img_url': url,
+          'style': 'Shinkai'
+        })
+      })
+      .then(res => res.json())
+      .then(resJson => {
+        this.setState({
+          result: resJson['img_url'],
+          transforming: false
+        })
+      })
+      .catch(err => {
+        err.json().then(e => {
+          this.toast(e.message, 'custom', 2000, toastColor)
+          this.setState({ transforming: false })
+        })
+      })
+    }
+  }
   
   render() {
     const { loading, uploading, images, result } = this.state
@@ -118,14 +153,14 @@ export default class App extends Component {
                   onError={this.onError}
                  />
         default:
-          return <Button onChange={this.onChange} />
+          return <UploadButton onChange={this.onUploadImage} />
       }
     }
 
     const rightContent = () => {
       switch(true) {
         case result.length > 0:
-          return <ResultImage />
+          return <ResultImage image={result}/>
         default:
           return <Cover />
       }
@@ -144,6 +179,9 @@ export default class App extends Component {
             <div className='content'>
               <div className='left-container'>
                 {leftContent()}
+              </div>
+              <div className='middle-container'>
+                <button className="my-button" onClick={this.transformStyle}>TRANSFORM</button>
               </div>
               <div className='right-container'>
                 {rightContent()}
