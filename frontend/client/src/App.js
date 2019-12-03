@@ -10,7 +10,7 @@ import './App.css'
 
 const toastColor = { 
   background: '#505050', 
-  text: '#fff' 
+  text: '#ffffff' 
 }
 
 export default class App extends Component {
@@ -27,7 +27,7 @@ export default class App extends Component {
         if (res.ok) {
           return this.setState({ loading: false })  
         }
-        const msg = 'Something is went wrong with Heroku' 
+        const msg = 'Something is went wrong with image server' 
         this.toast(msg, 'custom', 2000, toastColor)
       })
   }
@@ -39,7 +39,7 @@ export default class App extends Component {
     const files = Array.from(e.target.files)
 
     if (files.length > 3) {
-      const msg = 'Only 3 images can be uploaded at a time'
+      const msg = 'Only 3 image can be uploaded at a time'
       return this.toast(msg, 'custom', 2000, toastColor)  
     }
 
@@ -52,7 +52,7 @@ export default class App extends Component {
         errs.push(`'${file.type}' is not a supported format`)
       }
 
-      if (file.size > 150000) {
+      if (file.size > 50000000) {
         errs.push(`'${file.name}' is too large, please pick a smaller file`)
       }
 
