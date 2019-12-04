@@ -24,7 +24,7 @@ cloudinary.config(
 )
 
 #put your style name here, which should be sent through http
-styles = ['Hayao', 'Shinkai', 'Paprika']
+styles = ['Hayao', 'Shinkai', 'Paprika', 'Hosoda']
 
 class TransformImage(Resource):
     def post(self):

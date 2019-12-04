@@ -5,6 +5,7 @@ import UploadImage from './components/UploadImage'
 import ResultImage from './components/ResultImage'
 import UploadButton from './components/UploadButton'
 import Cover from './components/Cover'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import { IMAGE_SERVER_URL, TRANSFORM_SERVER_URL } from './config'
 import './App.css'
@@ -100,8 +101,12 @@ export default class App extends Component {
     if (this.state.images.length === 0) {
       const msg = 'Please upload an image first!' 
       this.toast(msg, 'custom', 2000, toastColor)
+    } else if (this.state.style.length === 0) {
+      const msg = 'Please select a style first!' 
+      this.toast(msg, 'custom', 2000, toastColor)
     } else {
       const url = this.state.images[0].secure_url
+      this.setState({transforming: true})
       fetch(`${TRANSFORM_SERVER_URL}/tf`, {
         method: 'POST',
         headers: {
@@ -130,9 +135,19 @@ export default class App extends Component {
       })
     }
   }
+
+  setStyle = e => {
+    const chosenStyle = e.target.innerHTML
+    this.setState({ style: chosenStyle })
+    const choices = document.getElementsByClassName('clicked')
+    if (choices.length > 0) {
+      choices[0].className = 'my-choice'
+    }
+    e.target.classList.add('clicked')
+  }
   
   render() {
-    const { uploading, images, result } = this.state
+    const { uploading, images, result, transforming } = this.state
     
     const leftContent = () => {
       switch(true) {
@@ -151,6 +166,8 @@ export default class App extends Component {
 
     const rightContent = () => {
       switch(true) {
+        case transforming: 
+          return <Spinner />
         case result.length > 0:
           return <ResultImage image={result} />
         default:
@@ -160,7 +177,7 @@ export default class App extends Component {
 
     const content = () => {
       return (
-        <div className='content'>
+        <main className='content'>
           <div className='left-container'>
             {leftContent()}
           </div>
@@ -170,13 +187,14 @@ export default class App extends Component {
           <div className='right-container'>
             {rightContent()}
           </div>
-        </div>
+        </main>
       )
     }
 
     return (
       <div className='container'>
         <Notifications />
+        <Header setStyle={this.setStyle} />
         {content()}
         <Footer />
       </div>

@@ -9,7 +9,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .content {
@@ -17,7 +17,6 @@ body {
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
-  height: 75vh
 }
 
 .my-button {
@@ -100,12 +99,64 @@ img {
   position: absolute;
 }
 
+/* Header */
+header {
+  width: 100vw;
+  margin: 3vh 0;
+}
+
+.category-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.category {
+  width: 250px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #385998;
+}
+
+.choice-wrapper {
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.my-choice {
+  box-shadow: 0px 0px 0px 1px #9fb4f2;
+	background: rgba(0, 0, 0, 0);
+	border-radius: 2px;
+	border: 1px solid #4e6096;
+	cursor: pointer;
+	color:#333333;
+  font-size: 16px;
+  font-weight: 600;
+	padding: 10px 25px;
+	text-decoration:none;
+  outline: none;
+}
+
+.my-choice:hover {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+  color: #ffffff;
+}
+
+.my-choice.clicked {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+  color: #ffffff;
+}
+
 /* Footer */
 footer {
   display: flex;
   justify-content: flex-end;
   width: 96vw;
-  margin: 0 2vw;
+  margin: 5vh 2vw;
 }
 
 footer .small-button {
