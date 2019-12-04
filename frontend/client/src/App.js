@@ -106,6 +106,7 @@ export default class App extends Component {
       this.toast(msg, 'custom', 2000, toastColor)
     } else {
       const url = this.state.images[0].secure_url
+      const chosenStyle = this.state.style
       this.setState({transforming: true})
       fetch(`${TRANSFORM_SERVER_URL}/tf`, {
         method: 'POST',
@@ -116,7 +117,7 @@ export default class App extends Component {
         },
         body: JSON.stringify({
           'img_url': url,
-          'style': 'Shinkai'
+          'style': chosenStyle
         })
       })
       .then(res => {

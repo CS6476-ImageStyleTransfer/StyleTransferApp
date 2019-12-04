@@ -46,4 +46,5 @@ def pix2pix(input_image_path="imgs", model_name='facades_label2photo_pretrained'
                 util.save_image(im, image_dir, aspect_ratio=1)
             count += 1
 
-# run code: pix2pix("imgs", "facades_label2photo_pretrained")
+if __name__ == '__main__':
+    pix2pix()
