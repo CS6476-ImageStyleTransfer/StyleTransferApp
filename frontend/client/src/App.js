@@ -97,7 +97,10 @@ export default class App extends Component {
   }
 
   removeImage = id => {
-    this.setState({ images: this.filter(id) })
+    this.setState({ 
+      images: this.filter(id),
+      result: ''
+    })
   }
 
   onError = id => {
@@ -123,11 +126,12 @@ export default class App extends Component {
           'style': 'Shinkai'
         })
       })
-      .then(res => res.json())
-      .then(resJson => {
-        this.setState({
-          result: resJson['img_url'],
-          transforming: false
+      .then(res => {
+        res.json().then(resJson => {
+          this.setState({
+            result: resJson['img_url'],
+            transforming: false
+          })
         })
       })
       .catch(err => {
@@ -160,7 +164,7 @@ export default class App extends Component {
     const rightContent = () => {
       switch(true) {
         case result.length > 0:
-          return <ResultImage image={result}/>
+          return <ResultImage image={result} />
         default:
           return <Cover />
       }

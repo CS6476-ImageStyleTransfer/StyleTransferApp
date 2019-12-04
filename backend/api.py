@@ -9,6 +9,7 @@ import cloudinary
 import cloudinary.uploader
 
 import cartoonGAN
+from settings import CLOUD_NAME, API_KEY, API_SECRET
 
 
 app = Flask(__name__)
@@ -17,18 +18,15 @@ cors = CORS(app)
 api = Api(app)
 
 cloudinary.config(
-  cloud_name = 'bxie41',  
-  api_key = '319594211464436',  
-  api_secret = 'f6CXshANZsH_yUun9Xfl9lc71cs'  
+  cloud_name = CLOUD_NAME,  
+  api_key = API_KEY,  
+  api_secret = API_SECRET
 )
 
 #put your style name here, which should be sent through http
 styles = ['Hayao', 'Shinkai', 'Paprika']
 
 class TransformImage(Resource):
-    def get(self):
-        return 'Hello world'
-
     def post(self):
         data = request.json
         
@@ -49,7 +47,7 @@ class TransformImage(Resource):
         # save image to local and upload it to cloudinary
         img_id = img_url[img_url.rfind('/')+1:-4]
         output_image.save('output/' + img_id + '.png')
-        reponse = cloudinary.uploader.upload('output/test.png')
+        reponse = cloudinary.uploader.upload('output/' + img_id + '.png')
         
         return {'img_url': reponse['secure_url']}
         
