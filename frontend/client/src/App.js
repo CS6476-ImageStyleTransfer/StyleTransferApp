@@ -5,7 +5,6 @@ import UploadImage from './components/UploadImage'
 import ResultImage from './components/ResultImage'
 import UploadButton from './components/UploadButton'
 import Cover from './components/Cover'
-import WakeUp from './components/WakeUp'
 import Footer from './components/Footer'
 import { IMAGE_SERVER_URL, TRANSFORM_SERVER_URL } from './config'
 import './App.css'
@@ -18,22 +17,11 @@ const toastColor = {
 export default class App extends Component {
   
   state = {
-    loading: true,
     uploading: false,
     transforming: false,
     images: [],
-    result: ''
-  }
-
-  componentDidMount() {
-    fetch(`${IMAGE_SERVER_URL}/wake-up`)
-      .then(res => {
-        if (res.ok) {
-          return this.setState({ loading: false })  
-        }
-        const msg = 'Something is went wrong with image server' 
-        this.toast(msg, 'custom', 2000, toastColor)
-      })
+    result: '',
+    style: ''
   }
 
   toast = notify.createShowQueue()
@@ -144,7 +132,7 @@ export default class App extends Component {
   }
   
   render() {
-    const { loading, uploading, images, result } = this.state
+    const { uploading, images, result } = this.state
     
     const leftContent = () => {
       switch(true) {
@@ -171,28 +159,19 @@ export default class App extends Component {
     }
 
     const content = () => {
-      switch(true) {
-        case loading:
-          return (
-            <div className='content'>
-              <WakeUp />
-            </div>
-          )
-        default:
-          return (
-            <div className='content'>
-              <div className='left-container'>
-                {leftContent()}
-              </div>
-              <div className='middle-container'>
-                <button className="my-button" onClick={this.transformStyle}>TRANSFORM</button>
-              </div>
-              <div className='right-container'>
-                {rightContent()}
-              </div>
-            </div>
-          )
-      }
+      return (
+        <div className='content'>
+          <div className='left-container'>
+            {leftContent()}
+          </div>
+          <div className='middle-container'>
+            <button className="my-button" onClick={this.transformStyle}>TRANSFORM</button>
+          </div>
+          <div className='right-container'>
+            {rightContent()}
+          </div>
+        </div>
+      )
     }
 
     return (

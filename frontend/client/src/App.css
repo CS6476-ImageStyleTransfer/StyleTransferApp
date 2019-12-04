@@ -96,38 +96,6 @@ img {
   border: 1px dashed #999;
 }
 
-/* Loading */
-.loading-wrapper, .loading {
-  display: flex;
-  align-items: center;
-  justify-content: center; 
-  flex-direction: column;
-}
-
-.loading {
-  width: 200px;
-  height: 200px;
-}
-
-.loading .background {
-  border-radius: 50%;
-  background: #268cf1;
-  border: 3px solid #3399ff;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
-  width: 200px;  
-  height: 200px;
-  box-sizing: border-box;
-  animation: pulse-colors 2s infinite alternate linear;
-}
-
-.loading .background .icon {
-  width: 200px;  
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #notification-wrapper {
   position: absolute;
 }

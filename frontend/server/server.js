@@ -19,8 +19,6 @@ app.use(cors({
 
 app.use(formData.parse())
 
-app.get('/wake-up', (req, res) => res.send('👌'))
-
 app.post('/image-upload', (req, res) => {
 
   const values = Object.values(req.files)
