@@ -8,7 +8,7 @@ import requests
 import cloudinary
 import cloudinary.uploader
 
-import cartoonGAN
+import transformer
 from settings import CLOUD_NAME, API_KEY, API_SECRET
 
 
@@ -42,7 +42,7 @@ class TransformImage(Resource):
 
         #use different models according to style
         if style in ['Hayao', 'Shinkai', 'Paprika']:
-            output_image = cartoonGAN.transfer(img, style, load_size=500)
+            output_image = transformer.cartoon_gan_transform(img, style, load_size=500)
     
         # save image to local and upload it to cloudinary
         img_id = img_url[img_url.rfind('/')+1:-4]
