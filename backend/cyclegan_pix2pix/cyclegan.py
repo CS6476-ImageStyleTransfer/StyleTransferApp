@@ -5,7 +5,7 @@ from models import create_model
 from util import util 
 
 
-def pix2pix(input_image_path="imgs", model_name='Facade'):
+def cyclegan(input_image_path="imgs", model_name='Monet'):
     opt = TestOptions().parse()  # get test options
     # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 1
@@ -15,12 +15,11 @@ def pix2pix(input_image_path="imgs", model_name='Facade'):
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
     opt.dataroot= input_image_path
     opt.direction = "BtoA" 
-    opt.model = "pix2pix" 
+    opt.model = "cycle_gan" 
     opt.name = model_name
     opt.num_test = 1
     opt.dataset_mode='aligned'
     opt.norm='batch'
-    opt.netG='unet_256'
 	
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
     model = create_model(opt)      # create a model given opt.model and other options
@@ -43,3 +42,6 @@ def pix2pix(input_image_path="imgs", model_name='Facade'):
             if(count == 1):
                 util.save_image(im, image_dir, aspect_ratio=1)
             count += 1
+
+if __name__ == '__main__':
+    cyclegan()
