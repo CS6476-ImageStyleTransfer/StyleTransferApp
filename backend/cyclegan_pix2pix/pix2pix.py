@@ -2,10 +2,8 @@ import os
 from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
-import numpy as np
 from util import util 
-from util.visualizer import save_images
-from util import html
+
 
 def pix2pix(input_image_path="imgs", model_name='facades_label2photo_pretrained'):
     opt = TestOptions().parse()  # get test options
