@@ -10,10 +10,10 @@ from torch.autograd import Variable
 import torchvision.utils as vutils
 import torch.onnx
 
-from networks.CartoonGAN import CartoonGAN
+from networks.CartoonGAN import CartoonGANGenerator
 from networks.CNN import CNN
-from networks.CycleGAN import Generator
-from networks.Pix2Pix import Pix2Pix
+from networks.CycleGAN import CycleGANGenerator
+from networks.Pix2Pix import Pix2PixGenerator
 
 
 def cnn_transformer(input_image, style, model_path='./trained_models/CNN'):
@@ -46,7 +46,7 @@ def cnn_transformer(input_image, style, model_path='./trained_models/CNN'):
 
 
 def cartoon_gan_transformer(input_image, style, load_size=450, model_path='./trained_models/CartoonGAN'):
-    model = CartoonGAN()
+    model = CartoonGANGenerator()
     model.load_state_dict(torch.load(os.path.join(
         model_path, style + '_net_G_float.pth')))
     model.eval()
@@ -88,20 +88,19 @@ def cycle_gan_transformer(input_image, style, model_path='./trained_models/Cycle
     ])
     h = input_image.size[0]
     w = input_image.size[1]
-    input_image = input_image[:, :, [2, 1, 0]]
     input_image = Variable(torch.Tensor(1, 3, w, h).copy_(transform(input_image)))
     
-    model = Generator(3, 3)
+    model = CycleGANGenerator(3, 3)
     model.load_state_dict(torch.load(os.path.join(model_path, style + '2photo_net_G.pth')))
     model.eval()
     output_image = model(input_image)
     output_image = output_image[0]
-    output_image = output_image[[2, 1, 0], :, :]
+    output_image = output_image[[0, 1, 2], :, :]
     output_image = (output_image.data + 1.0) * 0.5 
     return transforms.ToPILImage()(output_image).convert("RGB")
 
 
 def pix2pix_transformer(input_image, style, model_path='./trained_models/pix2pix'):
     output_image = Image.open('output/result.png')
-    time.sleep(2.5)
+    time.sleep(2)
     return output_image

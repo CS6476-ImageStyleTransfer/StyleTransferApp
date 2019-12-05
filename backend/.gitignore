@@ -1,3 +1,2 @@
 trained_models/*/*.pth
-pix2pix/*/*/*.pth
 _pycache_

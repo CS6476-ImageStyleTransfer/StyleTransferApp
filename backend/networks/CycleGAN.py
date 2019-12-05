@@ -18,9 +18,9 @@ class ResidualBlock(nn.Module):
     def forward(self, x):
         return x + self.conv_block(x)
 
-class Generator(nn.Module):
+class CycleGANGenerator(nn.Module):
     def __init__(self, input_nc, output_nc, n_residual_blocks=9):
-        super(Generator, self).__init__()
+        super(CycleGANGenerator, self).__init__()
 
         # Initial convolution block       
         model = [   nn.ReflectionPad2d(3),

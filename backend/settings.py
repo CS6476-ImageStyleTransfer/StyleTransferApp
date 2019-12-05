@@ -1,3 +1,3 @@
-CLOUD_NAME = 'bxie41'
-API_KEY = '319594211464436'
-API_SECRET = 'f6CXshANZsH_yUun9Xfl9lc71cs'  
+CLOUD_NAME = 'put your cloud name'
+API_KEY = 'put your api key'
+API_SECRET = 'put your api scret'  

@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class CartoonGAN(nn.Module):
+class CartoonGANGenerator(nn.Module):
     def __init__(self):
-        super(CartoonGAN, self).__init__()
+        super(CartoonGANGenerator, self).__init__()
         #
         self.refpad01_1 = nn.ReflectionPad2d(3)
         self.conv01_1 = nn.Conv2d(3, 64, 7)
